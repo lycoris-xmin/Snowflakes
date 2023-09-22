@@ -1,0 +1,10 @@
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\bin\Debug\netstandard2.0\Snowflakes.deps.json
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\bin\Debug\netstandard2.0\Snowflakes.dll
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\bin\Debug\netstandard2.0\Snowflakes.pdb
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.csproj.AssemblyReference.cache
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.GeneratedMSBuildEditorConfig.editorconfig
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.AssemblyInfoInputs.cache
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.AssemblyInfo.cs
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.csproj.CoreCompileInputs.cache
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.dll
+E:\Code\Lycoris\Snowflakes\src\Snowflakes\obj\Debug\netstandard2.0\Snowflakes.pdb
