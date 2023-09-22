@@ -302,8 +302,8 @@
     },
     "Lycoris.Snowflakes/1.0.0": {
       "type": "project",
-      "path": "../../Lycoris.Snowflakes/Lycoris.Snowflakes.csproj",
-      "msbuildProject": "../../Lycoris.Snowflakes/Lycoris.Snowflakes.csproj"
+      "path": "../../src/Lycoris.Snowflakes/Lycoris.Snowflakes.csproj",
+      "msbuildProject": "../../src/Lycoris.Snowflakes/Lycoris.Snowflakes.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -338,8 +338,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\Code\\Lycoris\\Snowflakes\\Lycoris.Snowflakes\\Lycoris.Snowflakes.csproj": {
-              "projectPath": "E:\\Code\\Lycoris\\Snowflakes\\Lycoris.Snowflakes\\Lycoris.Snowflakes.csproj"
+            "E:\\Code\\Lycoris\\Snowflakes\\src\\Lycoris.Snowflakes\\Lycoris.Snowflakes.csproj": {
+              "projectPath": "E:\\Code\\Lycoris\\Snowflakes\\src\\Lycoris.Snowflakes\\Lycoris.Snowflakes.csproj"
             }
           }
         }
