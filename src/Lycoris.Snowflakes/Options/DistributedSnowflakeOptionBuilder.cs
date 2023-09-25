@@ -10,35 +10,13 @@ namespace Lycoris.Snowflakes.Options
     {
         internal readonly IServiceCollection services;
 
-        internal Type redisType;
+        internal Type redisType = null;
 
-        internal IDistributedSnowflakesRedis redisHelper;
+        internal IDistributedSnowflakesRedis redisHelper = null;
 
         public DistributedSnowflakeOptionBuilder(IServiceCollection services)
         {
             this.services = services;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public DistributedSnowflakeOptionBuilder AddRedisService<T>() where T : IDistributedSnowflakesRedis
-        {
-            redisType = typeof(T);
-            return this;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public DistributedSnowflakeOptionBuilder AddRedisHelper<T>() where T : IDistributedSnowflakesRedis, new()
-        {
-            redisHelper = new T();
-            return this;
         }
     }
 }

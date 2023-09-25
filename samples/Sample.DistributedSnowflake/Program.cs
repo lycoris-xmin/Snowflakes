@@ -1,11 +1,12 @@
 using Lycoris.Snowflakes;
 using Microsoft.AspNetCore.Mvc;
+using Sample.DistributedSnowflake;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddSnowflake().AsHelper();
+builder.Services.AddDistributedSnowflake().AddSnowflakesRedisHelper<DistributedSnowflakesRedis>().AsHelper();
 
 var app = builder.Build();
 
@@ -16,9 +17,10 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", ([FromServices] ISnowflakeMaker snowflakeMaker) =>
+app.MapGet("/weatherforecast", () =>
 {
-    Console.WriteLine(snowflakeMaker.GetNextId());
+
+    Console.WriteLine(DistributedSnowflakeHelper.GetNextId()); 
 
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast

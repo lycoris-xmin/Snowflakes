@@ -5,8 +5,7 @@ namespace Lycoris.Snowflakes.Options
     public class DistributedSnowflakeOption : SnowflakeOption
     {
         /// <summary>
-        /// 分布式Id redis缓存前缀
-        /// 默认没有前缀
+        /// 分布式路由前缀(根据对应集群或者服务类别配置不同的前缀，如果未设置，则会随机生成guid)
         /// </summary>
         public string RedisPrefix { get; set; }
 
@@ -24,7 +23,6 @@ namespace Lycoris.Snowflakes.Options
     public enum DistributedSnowflakeType
     {
         AsService = 0,
-        AsHelper = 1,
-        AsAll = 2
+        AsHelper = 1
     }
 }

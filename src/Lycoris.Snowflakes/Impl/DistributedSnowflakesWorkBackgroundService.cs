@@ -1,5 +1,6 @@
 ﻿using Lycoris.Snowflakes.Options;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,18 +11,20 @@ namespace Lycoris.Snowflakes.Impl
     {
         private readonly DistributedSnowflakeOption _option;
         private readonly IDistributedSnowflakesSupport _distributedSupport;
-        private readonly int RefreshAliveInterval = 0;
+        private readonly int _refreshAliveInterval = 0;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="option"></param>
         /// <param name="distributedSupport"></param>
-        public DistributedSnowflakesWorkBackgroundService(DistributedSnowflakeOption option, IDistributedSnowflakesSupport distributedSupport)
+        public DistributedSnowflakesWorkBackgroundService(DistributedSnowflakeOption option, IDistributedSnowflakesSupport distributedSupport, ILoggerFactory factory)
         {
             _option = option;
             _distributedSupport = distributedSupport;
-            RefreshAliveInterval = (int)Math.Ceiling(_option.RefreshAliveInterval.Add(TimeSpan.FromMinutes(1)).TotalMilliseconds);
+            _refreshAliveInterval = (int)Math.Ceiling(_option.RefreshAliveInterval.Add(TimeSpan.FromMinutes(1)).TotalMilliseconds);
+            _logger = factory?.CreateLogger<DistributedSnowflakesWorkBackgroundService>();
         }
 
         /// <summary>
@@ -33,14 +36,13 @@ namespace Lycoris.Snowflakes.Impl
         {
             do
             {
-                if (_option.Type == DistributedSnowflakeType.AsService || _option.Type == DistributedSnowflakeType.AsAll)
+                if (_option.Type == DistributedSnowflakeType.AsService)
                     await ServiceSupportAsync();
-
-                if (_option.Type == DistributedSnowflakeType.AsHelper || _option.Type == DistributedSnowflakeType.AsAll)
+                else
                     await HelperSupportAsync();
 
                 // 延时
-                await Task.Delay(RefreshAliveInterval, stoppingToken);
+                await Task.Delay(_refreshAliveInterval, stoppingToken);
 
             } while (true);
         }
@@ -61,7 +63,7 @@ namespace Lycoris.Snowflakes.Impl
             }
             catch (Exception ex)
             {
-                //_logger.Error("refresh machine alive time failed", ex);
+                _logger?.LogError(ex, "refresh machine alive time failed");
             }
         }
 
@@ -81,7 +83,7 @@ namespace Lycoris.Snowflakes.Impl
             }
             catch (Exception ex)
             {
-                //_logger.Error("refresh machine alive time failed", ex);
+                _logger?.LogError(ex, "refresh machine alive time failed");
             }
         }
     }

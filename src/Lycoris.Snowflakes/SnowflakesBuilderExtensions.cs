@@ -2,6 +2,7 @@
 using Lycoris.Snowflakes.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace Lycoris.Snowflakes
         public static IServiceCollection AsService(this SnowflakeOptionBuilder builder)
         {
             if (SnowflakeHelper.HelperEnabled)
-                throw new Exception("");
+                throw new Exception("cannot register as a singleton service and a static instance at the same time");
 
             builder.services.Configure<SnowflakeOption>(opt =>
             {
@@ -60,7 +61,7 @@ namespace Lycoris.Snowflakes
         public static IServiceCollection AsHelper(this SnowflakeOptionBuilder builder)
         {
             if (builder.services.Any(f => f.ImplementationType == typeof(SnowflakesMakerService)))
-                throw new Exception("");
+                throw new Exception("cannot register as a singleton service and a static instance at the same time");
 
             SnowflakeHelper.Init(builder);
 
@@ -90,6 +91,17 @@ namespace Lycoris.Snowflakes
         }
 
         /// <summary>
+        /// 添加分布式雪花Id redis服务（单例服务使用）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static DistributedSnowflakeOptionBuilder AddSnowflakesRedisService<T>(this DistributedSnowflakeOptionBuilder builder) where T : IDistributedSnowflakesRedis
+        {
+            builder.redisType = typeof(T);
+            return builder;
+        }
+
+        /// <summary>
         /// 注册为单例服务，使用 <see cref="ISnowflakeMaker.GetNextId()"/> 或 <see cref="ISnowflakeMaker.GetNextIdAsync()"/> 获取雪花Id
         /// </summary>
         /// <param name="builder"></param>
@@ -97,14 +109,17 @@ namespace Lycoris.Snowflakes
         public static IServiceCollection AsService(this DistributedSnowflakeOptionBuilder builder)
         {
             if (DistributedSnowflakeHelper.HelperEnabled)
-                throw new Exception("");
+                throw new Exception("cannot register as a singleton service and a static instance at the same time");
+
+            if (builder.redisType == null)
+                throw new Exception("can not find redis tool service");
 
             builder.services.Configure<DistributedSnowflakeOption>(opt =>
             {
                 opt.WorkId = builder.WorkId;
                 opt.WorkIdLength = builder.WorkIdLength;
                 opt.StartTimeStamp = builder.StartTimeStamp;
-                opt.RedisPrefix = builder.RedisPrefix;
+                opt.RedisPrefix = string.IsNullOrEmpty(builder.RedisPrefix) ? Guid.NewGuid().ToString("N") : builder.RedisPrefix;
                 opt.RefreshAliveInterval = builder.RefreshAliveInterval;
             });
 
@@ -119,10 +134,34 @@ namespace Lycoris.Snowflakes
             {
                 var option = sp.GetRequiredService<IOptions<DistributedSnowflakeOption>>();
                 option.Value.Type = DistributedSnowflakeType.AsService;
-                return new DistributedSnowflakesWorkBackgroundService(option.Value, sp.GetRequiredService<IDistributedSnowflakesSupport>());
+                return new DistributedSnowflakesWorkBackgroundService(option.Value, sp.GetRequiredService<IDistributedSnowflakesSupport>(), sp.GetService<ILoggerFactory>());
             });
 
             return builder.services;
+        }
+
+        /// <summary>
+        /// 添加分布式雪花Id redis服务 （静态实例使用）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static DistributedSnowflakeOptionBuilder AddSnowflakesRedisHelper<T>(this DistributedSnowflakeOptionBuilder builder) where T : IDistributedSnowflakesRedis, new()
+        {
+            builder.redisHelper = new T();
+            return builder;
+        }
+
+        /// <summary>
+        /// 添加分布式雪花Id redis服务 （静态实例使用）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="builder"></param>
+        /// <param name="redisHelper"></param>
+        /// <returns></returns>
+        public static DistributedSnowflakeOptionBuilder AddSnowflakesRedisHelper<T>(this DistributedSnowflakeOptionBuilder builder, T redisHelper) where T : IDistributedSnowflakesRedis
+        {
+            builder.redisHelper = redisHelper;
+            return builder;
         }
 
         /// <summary>
@@ -133,14 +172,17 @@ namespace Lycoris.Snowflakes
         public static IServiceCollection AsHelper(this DistributedSnowflakeOptionBuilder builder)
         {
             if (builder.services.Any(f => f.ImplementationType == typeof(DistributedSnowflakeService)))
-                throw new Exception("");
+                throw new Exception("cannot register as a singleton service and a static instance at the same time");
+
+            if (builder.redisHelper == null)
+                throw new Exception("can not find redis tool service");
 
             var option = new DistributedSnowflakeOption()
             {
                 WorkId = builder.WorkId,
                 WorkIdLength = builder.WorkIdLength,
                 StartTimeStamp = builder.StartTimeStamp,
-                RedisPrefix = builder.RedisPrefix,
+                RedisPrefix = string.IsNullOrEmpty(builder.RedisPrefix) ? Guid.NewGuid().ToString("N") : builder.RedisPrefix,
                 RefreshAliveInterval = builder.RefreshAliveInterval,
                 Type = DistributedSnowflakeType.AsHelper
             };
@@ -149,7 +191,7 @@ namespace Lycoris.Snowflakes
 
             DistributedSnowflakeHelper.Init(option, redisHelper);
 
-            builder.services.AddHostedService(sp => new DistributedSnowflakesWorkBackgroundService(option, null));
+            builder.services.AddHostedService(sp => new DistributedSnowflakesWorkBackgroundService(option, null, sp.GetService<ILoggerFactory>()));
 
             return builder.services;
         }

@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "1CodwaPpZKHT0BzTLabMkthYO8aYPRX39H2tiuhfLcTmgHFVufNxs+hbjZigodFJTzI++H8U2RvYzkkKYv+G/w==",
+  "dgSpecHash": "80yja9KnCW9kcNRbQ867yIK/0Jh0V/fC5Z8Gmq5CMYz1podYV33PAewNUkygIhkG9ePcqaa3US6vCfCKFWydHw==",
   "success": true,
-  "projectFilePath": "E:\\Code\\Lycoris\\Snowflakes\\samples\\Samples.Snowflake\\Samples.Snowflake.csproj",
+  "projectFilePath": "E:\\Code\\Lycoris\\Snowflakes\\samples\\Samples.Snowflake\\Sample.Snowflake.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\6.0.0\\microsoft.extensions.hosting.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\lycoris\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\lycoris\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
