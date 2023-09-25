@@ -73,13 +73,13 @@ public class Demo
 
 ## 分布式
 
-**由于分布式需要同一个服务或集群内保证唯一Id，需要分配给不同实例分配对应的机器Id，故需要redis做辅助，此处推荐 `CSRedisCore` 做为redis服务端掩饰**
+**由于分布式需要同一个服务或集群内保证唯一Id，需要分配给不同实例分配对应的机器Id，故需要redis做辅助，此处推荐 `CSRedisCore` 做为redis服务端演示**
 
 ### 单例服务
 
 #### 创建redis辅助服务
 
-**创建redis辅助服务类 `DistributedSnowflakesRedis` 继承 `IDistributedSnowflakesRedis` 接口并实现对应功能，此处以  `CSRedisCore` 做为演示，其他服务请使用对应的方法，以下指令与redis cli指令名称相同**
+**创建redis辅助服务类 `DistributedSnowflakesRedis` 继承 `IDistributedSnowflakesRedis` 接口并实现对应功能，此处以  `CSRedisCore` 做为演示，其他redis相关服务请使用对应的方法，以下指令与redis cli指令名称相同**
 
 ```csharp
 public class DistributedSnowflakesRedis : IDistributedSnowflakesRedis
@@ -190,7 +190,7 @@ public class Demo
 ### 静态实例
 
 #### 创建redis辅助服务
-**创建redis辅助服务类 `DistributedSnowflakesRedis` 继承 `IDistributedSnowflakesRedis` 接口并实现对应功能，此处以  `CSRedisCore` 做为演示，其他服务请使用对应的方法，以下指令与redis cli指令名称相同**
+**创建redis辅助服务类 `DistributedSnowflakesRedis` 继承 `IDistributedSnowflakesRedis` 接口并实现对应功能，此处以  `CSRedisCore` 做为演示，其他redis相关服务请使用对应的方法，以下指令与redis cli指令名称相同**
 
 ```csharp
 public class DistributedSnowflakesRedis : IDistributedSnowflakesRedis
