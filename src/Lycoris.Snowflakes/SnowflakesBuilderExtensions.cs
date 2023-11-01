@@ -69,7 +69,7 @@ namespace Lycoris.Snowflakes
         }
 
         /// <summary>
-        /// 
+        /// 添加分布式雪花Id服务
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>

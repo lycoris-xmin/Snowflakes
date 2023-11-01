@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddSnowflake().AsHelper();
+builder.Services.AddSnowflake(opt => opt.StartTimeStamp = new DateTime(2023, 1, 1)).AsService();
 
 var app = builder.Build();
 
